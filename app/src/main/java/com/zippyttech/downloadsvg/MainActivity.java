@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -25,6 +26,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private ImageView iv;
+    private EditText et;
     private Drawable svgDrawable;
     private List<CountriesModel> listCountries;
 
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         iv = findViewById(R.id.iv_image);
+        et = findViewById(R.id.et_url);
         listCountries = new ArrayList<>();
         // Create a new ImageView
          ImageView imageView = new ImageView(this);
@@ -53,21 +56,35 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private ImageView createImageView(){
+
+        ImageView imageView = new ImageView(this);
+        imageView.setBackgroundColor(Color.WHITE);
+        SVG svg = SVGParser.getSVGFromResource(getResources(), R.raw.android);
+        imageView.setImageDrawable(svg.createPictureDrawable());
+        svgDrawable = svg.createPictureDrawable();
+        return imageView;
+    }
+
     public void getData(View view) {
+        String text = et.getText().toString();
+        if (!text.isEmpty())
+            downloadImageSVG(text);
+        else{
+            String err = "No Hay \"imagen url\" para desgargar...";
+            Toast.makeText(this, ""+err, Toast.LENGTH_SHORT).show();
+            et.setError(err);
+        }
 
     }
 
     private void downloadImageSVG(@NonNull String url){
-        try {
-            HttpImageRequestTask task = new HttpImageRequestTask(this, ""+url);
-            task.setTaskComplete(resp -> {
+            new HttpImageRequestTask(this, ""+url)
+                    .setTaskComplete(resp -> {
                 Bitmap bitmap = ImageUtils.base64ToBitmap(resp);
                 iv.setImageBitmap(bitmap);
             });
-        } catch (MalformedURLException e) {
-            Toast.makeText(this, "No se pudo descargar \""+url+"\"", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
-        }
+
     }
 
     private List<CountriesModel> getList(){

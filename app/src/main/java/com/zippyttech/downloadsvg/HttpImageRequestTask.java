@@ -24,12 +24,16 @@ public class HttpImageRequestTask extends AsyncTask<Void, Void, Drawable> {
     private Context context;
     private URL url;
 
-    public HttpImageRequestTask(@NonNull Context context,@NonNull String fromURL) throws MalformedURLException {
+    public HttpImageRequestTask(@NonNull Context context,@NonNull String fromURL)  {
         this.context = context;
         //this.url = new URL("http://upload.wikimedia.org/wikipedia/commons/e/e8/Svg_example3.svg");
-        this.url = new URL(fromURL);
-        execute();
-        System.out.println("Start HttpImageRequestTask");
+        try {
+            this.url = new URL(fromURL);
+            execute();
+            System.out.println("Start HttpImageRequestTask");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -54,9 +58,18 @@ public class HttpImageRequestTask extends AsyncTask<Void, Void, Drawable> {
         try {
            String response = ImageUtils.drawableToB64(drawable);
             taskComplete.OnDrawableTaskCompleted(response);
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(context, "Error en Respuesta del Servidor...", Toast.LENGTH_SHORT).show();
+            try {
+                LoadImage loadImage = new LoadImage(context, url.toString());
+                loadImage.setTaskComplete(response -> {
+                    taskComplete.OnDrawableTaskCompleted(response);
+                });
+            }catch (Exception er){
+                Toast.makeText(context, "Error en Respuesta del Servidor...", Toast.LENGTH_SHORT).show();
+            }
+
+
         }
     }
 
