@@ -1,18 +1,15 @@
-package com.zippyttech.downloadsvg;
+package com.zippyttech.downloadsvg.common;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.larvalabs.svgandroid.SVG;
 import com.larvalabs.svgandroid.SVGParser;
-
-import org.json.JSONException;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;

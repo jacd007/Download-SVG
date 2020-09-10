@@ -1,4 +1,4 @@
-package com.zippyttech.downloadsvg;
+package com.zippyttech.downloadsvg.model;
 
 public class CountriesModel {
     private int id;

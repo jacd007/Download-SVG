@@ -14,12 +14,14 @@ import android.widget.Toast;
 
 import com.larvalabs.svgandroid.SVG;
 import com.larvalabs.svgandroid.SVGParser;
+import com.zippyttech.downloadsvg.common.HttpImageRequestTask;
+import com.zippyttech.downloadsvg.common.ImageUtils;
+import com.zippyttech.downloadsvg.model.CountriesModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 

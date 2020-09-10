@@ -1,4 +1,4 @@
-package com.zippyttech.downloadsvg;
+package com.zippyttech.downloadsvg.common;
 
 import android.graphics.drawable.Drawable;
 
