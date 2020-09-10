@@ -70,9 +70,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void getData(View view) {
         String text = et.getText().toString();
-        if (!text.isEmpty())
+        if (!text.isEmpty()) {
+            iv.setImageResource(R.drawable.ic_baseline_refresh_24);
             downloadImageSVG(text);
-        else{
+            et.setText("");
+        }else{
             String err = "No Hay \"imagen url\" para desgargar...";
             Toast.makeText(this, ""+err, Toast.LENGTH_SHORT).show();
             et.setError(err);
@@ -83,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
     private void downloadImageSVG(@NonNull String url){
             new HttpImageRequestTask(this, ""+url)
                     .setTaskComplete(resp -> {
+                        iv.setImageResource(R.drawable.ic_launcher_background);
                 Bitmap bitmap = ImageUtils.base64ToBitmap(resp);
                 iv.setImageBitmap(bitmap);
             });

@@ -30,6 +30,7 @@ public class HttpImageRequestTask extends AsyncTask<Void, Void, Drawable> {
             System.out.println("Start HttpImageRequestTask");
         } catch (MalformedURLException e) {
             e.printStackTrace();
+            Toast.makeText(context, "Error (x01) en Respuesta del Servidor...", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -44,6 +45,7 @@ public class HttpImageRequestTask extends AsyncTask<Void, Void, Drawable> {
             return drawable;
         } catch (Exception e) {
             Log.e("MainActivity", e.getMessage(), e);
+            Toast.makeText(context, "Error  (x02) en Respuesta del Servidor...", Toast.LENGTH_SHORT).show();
         }
 
         return null;
